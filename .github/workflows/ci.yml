@@ -11,6 +11,11 @@ jobs:
     runs-on: ubuntu-latest
     name: CI
     steps:
-      - uses: nu12/templates/actions/test/go@main
+      - name: Lint
+        uses: nu12/templates/actions/lint/go@main
+        with:
+          go-version: '1.22.5'
+      - name: Test
+        uses: nu12/templates/actions/test/go@main
         with:
           go-version: '1.22.5'
