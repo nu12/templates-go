@@ -24,6 +24,7 @@ jobs:
       uses: nu12/templates/actions/build/go@main
       with:
         go-version: '1.22.5'
+        go-main: 'main.go greeting.go'
         name: template-go
     - name: Zip
       uses: nu12/templates/actions/utils/zip@main
