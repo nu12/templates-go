@@ -1,4 +1,4 @@
-name: CI
+name: 'Continuous Integration'
 
 on:
   workflow_dispatch: {}
@@ -9,7 +9,7 @@ on:
 jobs:
   ci:
     runs-on: ubuntu-latest
-    name: CI
+    name: 'Continuous Integration'
     steps:
       - name: Lint
         uses: nu12/templates/actions/lint/go@main
