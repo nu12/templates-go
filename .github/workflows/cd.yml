@@ -55,7 +55,7 @@ jobs:
       uses: nu12/templates/actions/utils/zip@main
       with:
         file-to-zip: 'template-go.exe'
-        output-file: 'template-go-linux-amd64.zip'
+        output-file: 'template-go-win-amd64.zip'
         util: '7z'
     - name: Upload
       uses: nu12/templates/actions/github/upload@main
