@@ -116,3 +116,4 @@ jobs:
       uses: nu12/templates/actions/docker/build@main
       with:
         tag: '${{ github.ref_name }}'
+        registry-password: '${{ secrets.TOKEN }}'
