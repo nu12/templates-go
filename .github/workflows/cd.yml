@@ -22,23 +22,14 @@ jobs:
     runs-on: 'ubuntu-latest'
     name: Build (linux-amd64)
     steps:
-    - name: Build
-      uses: nu12/templates/actions/build/go@main
+    - name: Build and Release
+      uses: nu12/templates/jobs/build-and-release/go@main
       with:
         go-version: '1.22.5'
         go-main: 'main.go greeting.go'
         name: template-go
-    - name: Zip
-      uses: nu12/templates/actions/utils/zip@main
-      with:
-        file-to-zip: 'template-go'
-        output-file: 'template-go-linux-amd64.zip'
-    - name: Upload
-      uses: nu12/templates/actions/github/upload@main
-      with:
+        platform: 'linux-amd64'
         release-name: '${{ github.ref_name }}'
-        upload-file: 'template-go-linux-amd64.zip'
-    
 
   win-amd64:
     needs: [release]
@@ -113,7 +104,7 @@ jobs:
     name: Build (docker)
     steps:
     - name: Build
-      uses: nu12/templates/actions/docker/build@main
+      uses: nu12/templates/actions/build/docker@main
       with:
         tag: '${{ github.ref_name }}'
         registry-password: '${{ secrets.TOKEN }}'
