@@ -15,3 +15,4 @@ jobs:
       run-test: true
       run-docker-build: true
       docker-tag: 'latest'
+    secrets: inherit
