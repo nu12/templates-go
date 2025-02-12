@@ -8,6 +8,7 @@ on:
 
 jobs:
   ci:
+    name: CI
     uses: nu12/templates/.github/workflows/go-pr.yml@main
     with:
       run-lint: true
