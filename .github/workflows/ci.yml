@@ -8,20 +8,10 @@ on:
 
 jobs:
   ci:
-    runs-on: ubuntu-latest
-    name: 'Continuous Integration'
-    steps:
-      - name: Lint
-        uses: nu12/templates/actions/lint/go@main
-        with:
-          go-version: '1.22.5'
-      - name: Test
-        uses: nu12/templates/actions/test/go@main
-        with:
-          go-version: '1.22.5'
-      - name: Build
-        uses: nu12/templates/actions/build/docker@main
-        with:
-          tag: '${{ github.ref_name }}'
-          registry-password: '${{ secrets.TOKEN }}'
-          push: false
+    uses: nu12/templates/.github/workflows/go/pr.yml@main
+    with:
+      go-version: '1.22.5'
+      run-lint: true
+      run-test: true
+      run-docker-build: true
+      docker-tag: 'latest'
