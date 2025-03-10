@@ -4,83 +4,18 @@ on:
     tags:
       - 'v*.*.*'
 
-permissions:
-  contents: write
-
 jobs:
-  release:
-    runs-on: 'ubuntu-latest'
-    name: Release
-    steps:
-    - name: Release
-      uses: nu12/templates/actions/github/release@main
-      with:
-        version: '${{ github.ref_name }}'
-
-  linux-amd64:
-    needs: [release]
-    runs-on: 'ubuntu-latest'
-    name: Build (linux-amd64)
-    steps:
-    - name: Build and Release
-      uses: nu12/templates/jobs/build-and-release/go@main
-      with:
-        go-version: '1.22.5'
-        go-main: 'main.go greeting.go'
-        name: template-go
-        platform: 'linux-amd64'
-        release-name: '${{ github.ref_name }}'
-
-  win-amd64:
-    needs: [release]
-    runs-on: "windows-latest"
-    name: Build (win-amd64)
-    steps:
-    - name: Build and Release
-      uses: nu12/templates/jobs/build-and-release/go@main
-      with:
-        go-version: '1.22.5'
-        go-main: 'main.go greeting.go'
-        name: template-go
-        platform: 'win-amd64'
-        zip-util: '7z'
-        release-name: '${{ github.ref_name }}'
-
-  darwin-amd64:
-    needs: [release]
-    runs-on: "macos-13"
-    name: Build (darwin-amd64)
-    steps:
-    - name: Build and Release
-      uses: nu12/templates/jobs/build-and-release/go@main
-      with:
-        go-version: '1.22.5'
-        go-main: 'main.go greeting.go'
-        name: template-go
-        platform: 'darwin-amd64'
-        release-name: '${{ github.ref_name }}'
-  
-  darwin-arm64:
-    needs: [release]
-    runs-on: 'macos-latest'
-    name: Build (darwin-arm64)
-    steps:
-    - name: Build and Release
-      uses: nu12/templates/jobs/build-and-release/go@main
-      with:
-        go-version: '1.22.5'
-        go-main: 'main.go greeting.go'
-        name: template-go
-        platform: 'darwin-arm64'
-        release-name: '${{ github.ref_name }}'
-
-  docker:
-    needs: [release]
-    runs-on: 'ubuntu-latest'
-    name: Build (docker)
-    steps:
-    - name: Build
-      uses: nu12/templates/actions/build/docker@main
-      with:
-        tag: '${{ github.ref_name }}'
-        registry-password: '${{ secrets.TOKEN }}'
+  ci:
+    name: CD
+    uses: nu12/templates/.github/workflows/go-release.yml@main
+    with:
+      go-binary-name: 'template-go'
+      go-main: 'main.go greeting.go'
+      go-version: '1.22.5'
+      release-linux-amd64: true
+      release-win-amd64: true
+      release-darwin-amd64: true
+      release-darwin-arm64: true
+      release-docker: true
+      version: '${{ github.ref_name }}'
+    secrets: inherit
